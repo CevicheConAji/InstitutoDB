@@ -2,6 +2,8 @@ package org.example;
 
 import org.example.controllers.ControllerDB;
 
+import java.sql.ResultSet;
+
 public class Main {
     public static void main(String[] args) {
         testing();
@@ -10,7 +12,7 @@ public class Main {
         ControllerDB controllerDB = new ControllerDB();
         connect(controllerDB);
 
-        createTableProfesor(controllerDB);
+        /**createTableProfesor(controllerDB);
         createTableAlumno(controllerDB);
         createTableAsignatura(controllerDB);
         createTableMatricula(controllerDB);
@@ -19,6 +21,14 @@ public class Main {
         insertAlumno(controllerDB);
         insertAsignatura(controllerDB);
         insertMatricula(controllerDB);
+
+        insertAlumno02(controllerDB);
+        insertProfesor02(controllerDB);**/
+        showProfesores(controllerDB);
+        showAlumnos(controllerDB);
+        queryAlumnosAntes1972(controllerDB);
+        queryProfesor(controllerDB);
+
 
         disconnect(controllerDB);
     }
@@ -91,5 +101,39 @@ public class Main {
                 "(1, 1, 2024, 8),\n" +
                 "(2, 2, 2024, 9)";
         controllerDB.executeUpdate(insert);
+    }
+    public static void insertAlumno02(ControllerDB controllerDB){
+        String insert = "INSERT INTO alumnos (nombre, apellidos, fecha_nac) VALUES ('Bilbo', 'Bolson', '1969-09-22')," +
+                "('Papá','Noel','1968-12-25'),('Tomas','Anderson','1971-05-15'),('Geralt','de Rivia','1968-05-15')";
+
+        controllerDB.executeUpdate(insert);
+
+    }
+    public static void showProfesores(ControllerDB controllerDB){
+        String query = "SELECT * FROM profesor";
+        ResultSet resultSet = controllerDB.executeQuery(query);
+        controllerDB.showTableProfesor(resultSet);
+    }
+    public static void showAlumnos(ControllerDB controllerDB){
+        String query = "SELECT * FROM alumnos";
+        ResultSet resultSet = controllerDB.executeQuery(query);
+        controllerDB.showAlumnos(resultSet);
+    }
+    public static void queryAlumnosAntes1972(ControllerDB controllerDB){
+        String query = "SELECT * FROM alumnos WHERE fecha_nac < '1972-12-31'";
+        System.out.println("Query: " + query);
+        ResultSet resultSet = controllerDB.executeQuery(query);
+        controllerDB.showAlumnos(resultSet);
+    }
+    public static void insertProfesor02(ControllerDB controllerDB){
+        String inser = "INSERT INTO profesor (nombre,apellidos,fecha_nac) VALUES ('Gandalf','el Blanco','1969-02-14')," +
+                "('Morfeo','Neo','1971-09-13'),('Yennefer','de Vengerberg','1968-05-15')";
+        controllerDB.executeUpdate(inser);
+    }
+    public static void queryProfesor(ControllerDB controllerDB){
+        String query = "SELECT * FROM profesor WHERE fecha_nac BETWEEN '1900-01-01' AND '1950-12-31'";
+        ResultSet rs = controllerDB.executeQuery(query);
+        System.out.println("Query: " + query);
+        controllerDB.showTableProfesor(rs);
     }
 }

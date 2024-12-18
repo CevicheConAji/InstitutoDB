@@ -50,13 +50,40 @@ public class ControllerDB {
     }
     public void showTableProfesor(ResultSet rs) {
         try {
+            System.out.printf("%-10s %-10s %-10s %-10s\n","ID PROFESOR","NOMBRE","APELLIDO","FECHA NACIMIENTO");
             while (rs.next()) {
                 int id = rs.getInt("id_profesor");
                 String prof = rs.getString("nombre");
                 String apellido = rs.getString("apellidos");
                 Date fechaNacimiento = rs.getDate("fecha_nac");
-                System.out.printf("%-10s",id);
+                System.out.printf("%-10s %-10s %-10s %-10s\n",id,prof,apellido,fechaNacimiento);
 
+            }
+        }catch (SQLException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    public void showAlumnos(ResultSet rs) {
+        try{
+            System.out.printf("%-10s %-10s %-10s %-10s\n","ID ALUMNO","NOMBRE","APELLIDO","FECHA NACIMIENTO");
+            while (rs.next()) {
+                int id = rs.getInt("id_alumno");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellidos");
+                Date fechaNacimiento = rs.getDate("fecha_nac");
+                System.out.printf("%-10s %-10s %-10s %-10s\n",id,nombre,apellido,fechaNacimiento);
+            }
+        }catch (SQLException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    public void showAsignatura(ResultSet rs) {
+        try{
+            while (rs.next()) {
+                int id = rs.getInt("id_signatura");
+                String nombre = rs.getString("nombre");
+                int idprof = rs.getInt("id_profesor");
+                System.out.printf("%-10s %-10s %-10s\n",id,nombre,idprof);
             }
         }catch (SQLException e){
             System.out.println("Error: " + e.getMessage());
